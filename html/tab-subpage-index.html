@@ -117,9 +117,9 @@
 			<div class="item receive-btn" id="receive-btn">
 				<span class="mui-icon icon iconfont icon-qrcode"></span>接收
 			</div>
-			<div class="item" id="send-btn">
-				<span class="mui-icon icon iconfont icon-label"></span>发送
-			</div>
+<!--			<div class="item" id="send-btn">-->
+<!--				<span class="mui-icon icon iconfont icon-label"></span>发送-->
+<!--			</div>-->
 		</div>
 		
 	</body>
@@ -361,42 +361,42 @@
 			
 		})
 		
-		h("#send-btn").tap(function(){
-			
-			var address = "";
-			var accounts = plus.storage.getItem('accounts');			
-			if(!accounts)
-			{
-				accounts = new Array();
-			}
-			else
-			{
-				accounts = JSON.parse(accounts);
-			}
-			for(var i in accounts)
-			{
-				if(accounts[i].wallet_default == 1)
-				{
-					address = accounts[i].address;
-				}
-			}
-			localStorage.setItem("send-type",2);
-			mui.openWindow({
-				url: 'wallet/send-step-1.html',
-				id: 'send-step-1.html',
-				extras:{
-					address:address,
-					assets_name:"QKI"
-				},
-				show: {
-					autoShow:true,
-				},
-				waiting: {
-					autoShow: false
-				}
-			});
-			
-		})
+		// h("#send-btn").tap(function(){
+		//
+		// 	var address = "";
+		// 	var accounts = plus.storage.getItem('accounts');
+		// 	if(!accounts)
+		// 	{
+		// 		accounts = new Array();
+		// 	}
+		// 	else
+		// 	{
+		// 		accounts = JSON.parse(accounts);
+		// 	}
+		// 	for(var i in accounts)
+		// 	{
+		// 		if(accounts[i].wallet_default == 1)
+		// 		{
+		// 			address = accounts[i].address;
+		// 		}
+		// 	}
+		// 	localStorage.setItem("send-type",2);
+		// 	mui.openWindow({
+		// 		url: 'wallet/send-step-1.html',
+		// 		id: 'send-step-1.html',
+		// 		extras:{
+		// 			address:address,
+		// 			assets_name:"QKI"
+		// 		},
+		// 		show: {
+		// 			autoShow:true,
+		// 		},
+		// 		waiting: {
+		// 			autoShow: false
+		// 		}
+		// 	});
+		//
+		// })
 		
 		/**
 		* 下拉刷新具体业务实现
