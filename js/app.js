@@ -70,6 +70,18 @@ var commonAssetsList = [
 		'price':0,
 		'address':'',
 		'token_address':'0xdAC17F958D2ee523a2206206994597C13D831ec7'
+	},
+	{
+		'assets_name':'CCT',
+		'icon':"icon-tools",
+		'description':"ETH token",
+		'is_main':0,
+		'main_chain':"ETH",
+		'amount':0,
+		'legal_money':0,
+		'price':0,
+		'address':'',
+		'token_address':'0xca34f93f019aafa64a6c16d1c0e791d407af8271'
 	}
 ]
 
