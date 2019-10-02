@@ -855,9 +855,8 @@ function updateEthTokenAmount(address,assets_name)
 	// 创建智能合约
 	const contract = new ethers.Contract(token, abi, provider);
 
-	decimals = 0;
 	contract.decimals().then(function(data){
-		decimals = data;
+		var decimals = data;
 		var balance =  0;
 		contract.balanceOf(address).then(function (data) {
 			balance = math.divide(data.toString(), math.pow(10,decimals));
