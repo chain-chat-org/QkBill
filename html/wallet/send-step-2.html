@@ -407,7 +407,12 @@
 				
 				amount = accMul(send_amount,math.pow(10,decimals)) + "";
 			
-				contract.transfer(send_address, amount, {gasLimit: gasLimit,}).then(function (data) {
+				contract.transfer(send_address, amount,
+						{
+							gasLimit: gasLimit,
+							gasPrice: ethers.utils.parseUnits("10", "gwei")
+						}
+						).then(function (data) {
 					
 					var hash = data.hash;
 				
