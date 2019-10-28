@@ -297,7 +297,7 @@ function updatelLegalMoney()
 		assetsString = assetsString + commonAssetsList[i].assets_name + ",";
 	}
 	assetsString = assetsString.substring(0,assetsString.length-1)
-	mui.ajax('https://qkiotc.com/api/get-avg-price-assetsname',{
+	mui.ajax('https://dddotc.com/api/get-avg-price-assetsname',{
 	
 		data:{
 			assets_name:assetsString,
