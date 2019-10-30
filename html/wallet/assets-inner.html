@@ -171,8 +171,16 @@
 			
 			document.getElementsByClassName('assets-ico')[0].classList.add(assets.icon);
 		
-
-			vm.amount = assets.amount;
+			var assetsAmount = assets.amount;
+			if(assetsAmount == 0)
+			{
+				vm.amount = assetsAmount;
+			}
+			else
+			{
+				assetsAmount = parseFloat(assetsAmount);
+				vm.amount =  parseFloat(assetsAmount.toFixed(15));
+			}
 			
 			//跳转到接收页面
 			h("#receive-btn").tap(function(){
@@ -266,7 +274,7 @@
 				else
 				{
 					
-					mui.ajax('https://api.etherscan.io/api',{
+					mui.ajax('http://api-cn.etherscan.com/api',{
 						data:{
 							address:address,
 							module:'account',
@@ -383,7 +391,7 @@
 				}
 				else
 				{
-					mui.ajax('https://api.etherscan.io/api',{
+					mui.ajax('http://api-cn.etherscan.com/api',{
 						data:{
 							address:address,
 							contractaddress:token,
