@@ -281,7 +281,7 @@ function getBalance()
 		},
 		error:function(xhr,type,errorThrown){
 			//异常处理；
-			mui.toast("请求异常1");
+			// mui.toast("请求异常1");
 		}
 	});
 	
@@ -297,17 +297,16 @@ function updatelLegalMoney()
 		assetsString = assetsString + commonAssetsList[i].assets_name + ",";
 	}
 	assetsString = assetsString.substring(0,assetsString.length-1)
+	//console.log("https://dddotc.com/api/get-avg-price-assetsname?assets_name="+assetsString+"&currency=cny")
 	mui.ajax('https://dddotc.com/api/get-avg-price-assetsname',{
-	
 		data:{
 			assets_name:assetsString,
 			currency:"cny"
 		},
 		dataType:'json',//服务器返回json格式数据
 		type:'get',//HTTP请求类型
-		timeout:10000,//超时时间设置为10秒；	              
+		timeout:5000,//超时时间设置为10秒；	              
 		success:function(data){
-			
 			if(data.code == 0)
 			{
 				var data = data.data;
@@ -340,12 +339,12 @@ function updatelLegalMoney()
 					}
 				});
 			}
-			
 		},
 		error:function(xhr,type,errorThrown){
-			mui.toast("请求异常");
+			// mui.toast("请求异常5");
 		}
 	});
+	
 }
 
 

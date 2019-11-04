@@ -55,11 +55,6 @@
 								<span class="assets-name mui-pull-left">USDT</span>
 								<span class="assets-amount mui-pull-left">{{usdtAmount.toFixed(4)}}</span>
 							</a>
-							<a class="mui-control-item item">
-								<span class="assets-ico icon iconfont icon-supply mui-pull-left czt"></span>
-								<span class="assets-name mui-pull-left">CZT</span>
-								<span class="assets-amount mui-pull-left">{{cztAmount.toFixed(4)}}</span>
-							</a>
 						</div>
 					</div>
 				</div>
@@ -136,7 +131,6 @@
 
 		var assetsAmount = 0;
 		var qkiAmount = 0;
-		var cztAmount = 0;
 		var cctAmount = 0;
 		var ethAmount = 0;
 		var usdtAmount = 0;
@@ -191,7 +185,6 @@
 			data: {
 				assetsAmount:assetsAmount,
 				qkiAmount:qkiAmount,
-				cztAmount:cztAmount,
 				cctAmount:cctAmount,
 				ethAmount:ethAmount,
 				usdtAmount:usdtAmount,
@@ -438,7 +431,6 @@
 			//显示总资产(法币)
 			vm.assetsAmount = getAssetsAmount();
 			vm.qkiAmount = getAssetsSumBalance("QKI");
-			vm.cztAmount = getAssetsSumBalance("CZT");
 			vm.cctAmount = getAssetsSumBalance("CCT");
 			vm.ethAmount = getAssetsSumBalance("ETH");
 			vm.usdtAmount =  getAssetsSumBalance("USDT");
