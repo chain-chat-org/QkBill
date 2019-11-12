@@ -286,7 +286,6 @@ function getBalance()
 	});
 	
 }
-
 //更新每个资产的法币金额
 function updatelLegalMoney()
 {
@@ -296,12 +295,12 @@ function updatelLegalMoney()
 	{
 		assetsString = assetsString + commonAssetsList[i].assets_name + ",";
 	}
-	assetsString = assetsString.substring(0,assetsString.length-1)
+	assetsString = assetsString.substring(0,assetsString.length-1);
 	//console.log("https://dddotc.com/api/get-avg-price-assetsname?assets_name="+assetsString+"&currency=cny")
 	mui.ajax('https://dddotc.com/api/get-avg-price-assetsname',{
 		data:{
 			assets_name:assetsString,
-			currency:"cny"
+			currency:"usd"
 		},
 		dataType:'json',//服务器返回json格式数据
 		type:'get',//HTTP请求类型

@@ -21,7 +21,7 @@
 		<div class="mui-content" id="content"  v-cloak>
 			
 			<div class="wallet-bar">
-				{{assetsAmount.toFixed(2)}} <span>¥</span>
+				{{assetsAmount.toFixed(2)}} <span>$</span>
 			</div>
 			
 			<div class="assets-title">
@@ -37,7 +37,7 @@
 					<div class="assets-amount mui-pull-right">
 						<p>{{item.amount}}</p>
 						<p class="legal-money" v-if="item.legal_money > 0">
-							¥ {{item.legal_money}}
+							$ {{item.legal_money}}
 						</p>
 						<p class="legal-money" v-if="item.legal_money == 0">
 							-
