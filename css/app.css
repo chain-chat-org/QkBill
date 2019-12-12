@@ -439,6 +439,12 @@ html{
 	background: #F2F2F2;
 	padding: 0.8rem 0 0.8rem 5%;
 	color: #9c9c9c;
+	position: relative;
+}
+.assets-title .add-assets-btn{
+	position: absolute;
+	right: 1rem;
+	font-size: 3rem;
 }
 .wallet-assets{
 	width: 90%;

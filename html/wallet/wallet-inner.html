@@ -26,6 +26,7 @@
 			
 			<div class="assets-title">
 				资产列表
+				<span class="icon iconfont icon-addition add-assets-btn"  v-on:tap="addAssets()"></span>
 			</div>
 			
 			<div class="wallet-assets">
@@ -122,6 +123,24 @@
 						});
 							
 					},
+					addAssets: function () {
+							
+						mui.openWindow({
+							url: "add-assets.html",
+							id: "add-assets.html",
+							extras:{
+								address:address
+							},
+							show:{
+								autoShow:true,
+								aniShow:'slide-in-right',
+							},
+							waiting:{
+								autoShow:false,
+							}
+						});
+							
+					},
 					setIcon(icon) {
 						let obj = {'assets-ico':true,'icon':true,'iconfont':true,'mui-pull-left':true};
 						obj[`${icon}`] = true;
@@ -133,6 +152,12 @@
 			
 			vm_header.wallet_name = wallet_name;
 			
+		});
+		
+		
+		//定义首页刷新事件
+		document.addEventListener('fresh-wallet', function() {
+			vm.assetsList = showAssets(address);
 		});
 		
 	</script>

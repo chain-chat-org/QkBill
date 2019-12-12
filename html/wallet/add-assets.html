@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>quark-bill</title>
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/app.css">
+		<link rel="stylesheet" href="../../fonts/iconfont.css">
+	</head>
+	<body>
+		
+		<header class="mui-bar mui-bar-nav app-header-1" id="header">
+			<a class="mui-action-back mui-icon icon iconfont icon-return mui-pull-left"></a>
+		</header>
+		
+		<nav class="mui-bar mui-bar-tab button-bar">
+			<button type="button" class="create-wallet-btn mui-btn mui-btn-block" id="add-btn">添加</button>
+		</nav>
+		
+		<div class="mui-content" id="content">
+			
+			<div class="title-bar-1">
+				<span class="mui-pull-left title">添加资产</span>
+			</div>
+			
+			<div class="create-wallet-tip">
+				
+				<span class="mui-icon icon iconfont icon-integral_fill mui-pull-left"></span>
+				<div class="inner mui-pull-left">
+					添加一个资产，输入资产名和他的合约地址即可，添加的资产会显示到此钱包资产列表中。（目前只支持添加QKI主网TOKEN）
+				</div>
+				
+			</div>
+			
+			<div class="create-wallet-box">
+				
+				<form class="mui-input-group">
+					<div class="mui-input-row item">
+						<p class="title">资产名</p>
+						<input type="text" id="assets-name" placeholder="请输入资产名">
+					</div>
+					<div class="mui-input-row item">
+						<p class="title">合约地址</p>
+						<input type="text" id="token-address" placeholder="请输入合约地址">
+					</div>
+				</form>
+				
+			</div>
+			
+			
+		</div>
+		
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/immersed.js"></script>
+	<script src="../../js/h.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/ethers.min.js"></script>
+	
+	<script>
+		mui.init({
+			swipeBack:true //启用右滑关闭功能
+		});
+		
+		mui.plusReady(function() {
+			
+			var self = plus.webview.currentWebview();
+			address = self.address;
+			
+		});
+		
+		h("#add-btn").tap(function(){
+			
+			var assets_name = document.getElementById("assets-name").value;
+			if(assets_name.length < 2 || assets_name.length > 20)
+			{
+				mui.toast("资产名长度2到20位");
+				return false;
+			}
+			assets_name = assets_name.toUpperCase()
+			var token_address = document.getElementById("token-address").value;
+			if(token_address.length != 42)
+			{
+				mui.toast("请正确输入合约地址");
+				return false;
+			}
+			
+			var commonAssetsList = plus.storage.getItem(address+"-assets");
+			commonAssetsList = JSON.parse(commonAssetsList);
+			// console.log(commonAssetsList);
+	
+			var exists = false;
+			for(var i in commonAssetsList)
+			{
+				if(token_address == commonAssetsList[i].token_address)
+				{
+					exists = true;
+					break;
+				}
+			}
+			if(exists == true)
+			{
+				mui.toast("此资产已存在");
+				return false;
+			}
+			
+			
+			commonAssetsList.push(
+				{
+					assets_name:assets_name,
+					icon:'icon-tailor',
+					description:'QKI token',
+					is_main:0,
+					main_chain:'QKI',
+					amount:0,
+					legal_money:0,
+					price:0,
+					address:address,
+					token_address:token_address
+				}
+			);
+			
+			plus.storage.setItem(address+"-assets",JSON.stringify(commonAssetsList));
+			
+			getBalance();
+			//更新每个资产的法币金额
+			updatelLegalMoney();
+			
+			var walletPage = plus.webview.getWebviewById("wallet-inner.html");
+			mui.fire(walletPage,'fresh-wallet');
+			
+			mui.back();
+			
+	
+		});
+	</script>
+</html>
