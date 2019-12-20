@@ -883,3 +883,48 @@ function accMul(arg1,arg2)
          
 	return (Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m));
 }
+
+/**
+ * 全部合约资产
+ */
+function getAllTokenBalance() {
+	let accounts = JSON.parse(plus.storage.getItem('accounts'))
+	for (let index_1 in accounts) {
+		let account = accounts[index_1]
+		let assets = JSON.parse(plus.storage.getItem(account.address + "-assets"))
+		for (let index_2 in assets) {
+			let contract = assets[index_2]
+			contract.decimals = contract.decimals ? contract.decimals : 8
+			if (contract.main_chain === 'ETH' && contract.token_address) {
+				getTokenBalance(contract.token_address, account.address, (response) => {
+					contract.amount = (response.result / Math.pow(10, contract.decimals)).toFixed(2)
+				})
+			}
+			assets[index_2] = contract
+		}
+		setTimeout(() => {
+			plus.storage.setItem(account.address + "-assets", JSON.stringify(assets))
+		}, 500)
+	}
+}
+
+/**
+ * 合约资产
+ * @param contractaddress
+ * @param address
+ * @param cb
+ */
+function getTokenBalance(contractaddress, address, cb) {
+	let url = 'http://api-cn.etherscan.com/api'
+	let params = {
+		module: 'account',
+		action: 'tokenbalance',
+		contractaddress: contractaddress,
+		address: address,
+		tag: 'latest',
+		apikey: 'TJDWN2WQI6WF4ERNW4FDXJGB9DSQ881P7J'
+	}
+	mui.getJSON(url, params, (response) => {
+		cb(response)
+	})
+}
