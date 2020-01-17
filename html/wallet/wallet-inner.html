@@ -19,9 +19,10 @@
 		</header>
 		
 		<div class="mui-content" id="content"  v-cloak>
-			
+
 			<div class="wallet-bar">
-				{{assetsAmount.toFixed(2)}} <span>$</span>
+				<div class="address copy-text" :data-address="address" style="line-height: 4rem;font-size:2rem">{{address.substr(0,10)}}……{{address.substr(32,10)}}<span class="mui-icon mui-icon-upload">复制</span></div>
+				<div style="line-height: 4rem;">{{assetsAmount.toFixed(2)}} <span>$</span></div>
 			</div>
 			
 			<div class="assets-title">
@@ -153,7 +154,27 @@
 			vm_header.wallet_name = wallet_name;
 			
 		});
-		
+
+		mui('body').on('tap', '.copy-text', function () {
+			var hash = this.getAttribute('data-address');
+			if (mui.os.ios)
+			{
+				var UIPasteboard  = plus.ios.importClass("UIPasteboard");
+				var generalPasteboard = UIPasteboard.generalPasteboard();
+				// 设置/获取文本内容:
+				generalPasteboard.setValueforPasteboardType(hash, "public.utf8-plain-text");
+				var value = generalPasteboard.valueForPasteboardType("public.utf8-plain-text");
+				mui.toast("地址已复制")
+			}
+			else
+			{
+				var Context = plus.android.importClass("android.content.Context");
+				var main = plus.android.runtimeMainActivity();
+				var clip = main.getSystemService(Context.CLIPBOARD_SERVICE);
+				plus.android.invoke(clip,"setText",hash);
+				mui.toast("地址已复制")
+			}
+		});
 		
 		//定义首页刷新事件
 		document.addEventListener('fresh-wallet', function() {
