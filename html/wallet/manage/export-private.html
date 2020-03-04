@@ -144,6 +144,10 @@
 						document.getElementById("password-tip").style.display="block";
 						showSoftInput();
 						mui("#verify-btn").button('reset');
+						window.addEventListener('tap', function(e) {
+							    e.target.className == 'mui-backdrop mui-active' && e.stopPropagation();
+								e.target.className == 'cancel-btn mui-btn mui-btn-block' && e.stopPropagation();
+							},true)
 						return false;
 					}
 					document.getElementById("password-tip").style.display="none";
