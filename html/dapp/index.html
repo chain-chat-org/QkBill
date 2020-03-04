@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>quark-bill</title>
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/app.css">
+		<link rel="stylesheet" href="../../fonts/iconfont.css">
+	</head>
+	<body class="manage-wallet-page">
+		
+		<header class="mui-bar mui-bar-nav app-header-1" id="header">
+			<a class="mui-action-back mui-icon icon iconfont icon-return mui-pull-left"></a>
+			<h1 class="mui-title" id="dapp-title"></h1>
+		</header>
+		
+		<div class="mui-content" id="content">
+		
+			<iframe id="dapp-iframe" src="" width="100%" style="border: none;height: 90vh;"></iframe>
+
+		</div>
+			
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/immersed.js"></script>
+	<script src="../../js/h.min.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script src="../../js/app.js"></script>
+	
+	<script>
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			var url = self.url;
+		    var title = self.title;
+			document.getElementById("dapp-iframe").src = url;
+			document.getElementById("dapp-title").innerHTML = title;
+		});
+		
+	</script>
+</html>

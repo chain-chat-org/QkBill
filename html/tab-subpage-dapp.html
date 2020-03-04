@@ -9,112 +9,93 @@
 		<link rel="stylesheet" href="../css/mui.min.css">
 		<link rel="stylesheet" href="../css/app.css">
 		<link rel="stylesheet" href="../fonts/iconfont.css">
-
+		<link rel="stylesheet" href="../css/dapp.css">
+		<style>
+			.mui-slider .mui-slider-group .mui-slider-item{
+				padding:0 10px;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {			  
+				border-radius: 10px;				
+			}
+		</style>	
 	</head>
 	<body class="index-page">
 	
-		<header class="mui-bar mui-bar-nav app-header-1" id="header">
-			<a class="mui-icon icon iconfont icon-more mui-pull-right index-more-icon" href="#header-menu"></a>
-			<a class="mui-icon icon iconfont icon-scan mui-pull-right index-scan" id="scan-btn"></a>
-		</header>
-
-		<div class="mui-content mui-scroll-wrapper" id="content" v-cloak>
+		<div class="mui-content " id="content">
 			
-			<div class="mui-scroll">
-				<div class="capital-bar">
-					<div class="box">
-						<div class="title">
-							资产
-						</div>
-						<div class="assets-amount">
-							{{assetsAmount}} <span>$</span>
-						</div>
-					</div>
+			<div class="">
+				<div class="mui-slider">
+				  <div class="mui-slider-group mui-slider-loop">
+				    <!--支持循环，需要重复图片节点-->
+				    <div class="mui-slider-item mui-slider-item-duplicate"><img :src="banner[banner.length-1].img" v-if='banner.length>0'/></div>
+				    <div class="mui-slider-item" v-for="item in banner" v-on:tap="open_url(item.url,item.title)"><img :src="item.img" /></div>
+				   
+				    <!--支持循环，需要重复图片节点-->
+				    <div class="mui-slider-item mui-slider-item-duplicate" ><img :src="banner[0].img" v-if='banner.length>0' /></div>
+				  </div>
+				  <div class="mui-slider-indicator">	
+				    <div class="mui-indicator mui-active" v-for="(item,key) in banner" v-if="key==0"></div>
+				    <div class="mui-indicator" v-for="(item,key) in banner" v-if="key!=0"></div>		
+				  </div>
 				</div>
-				
-				<div class="mui-slider assets-list">
-					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-						<div class="mui-scroll">
-							<a class="mui-control-item item">
-								<span class="assets-ico icon iconfont icon-integral mui-pull-left qki"></span>
-								<span class="assets-name mui-pull-left">QKI</span>
-								<span class="assets-amount mui-pull-left">{{qkiAmount.toFixed(4)}}</span>
-							</a>
-							<a class="mui-control-item item">
-								<span class="assets-ico icon iconfont icon-yitaifang mui-pull-left"></span>
-								<span class="assets-name mui-pull-left">ETH</span>
-								<span class="assets-amount mui-pull-left">{{ethAmount.toFixed(4)}}</span>
-							</a>
-							<a class="mui-control-item item">
-								<span class="assets-ico icon iconfont icon-tools mui-pull-left czt"></span>
-								<span class="assets-name mui-pull-left">CCT</span>
-								<span class="assets-amount mui-pull-left">{{cctAmount.toFixed(4)}}</span>
-							</a>
-							<a class="mui-control-item item">
-								<span class="assets-ico icon iconfont icon-usdt mui-pull-left usdt"></span>
-								<span class="assets-name mui-pull-left">USDT</span>
-								<span class="assets-amount mui-pull-left">{{usdtAmount.toFixed(4)}}</span>
-							</a>
-						</div>
+				<div class="dapp-list">
+					<div class="list-item" v-for="(item, index) in dapp" v-if="index<=9" v-on:tap="open_url(item.url,item.title)">
+						<img :src="item.img" alt="" width="100%" >
+						<div class="app_name">{{item.title}}</div>
 					</div>
+					
 				</div>
-	
-				<div class="wallet-list">
+				<!-- <div class="my-dapp" >
 					
-					<div class="title-bar">
-						<span class="mui-pull-left title">我的钱包</span>
-						<a class="mui-icon icon iconfont icon-add mui-pull-right add-wallet-btn-list"  href="#topPopover"></a>
-					</div>
-					
-					<div class="no-data-tip" id="no-data-tip" style="display: none;">
-						<span class="mui-icon icon iconfont icon-coupons"></span>
-						<p>暂无钱包</p>
-					</div>
-					
-					<div class="list">
+					<div style="flex-shrink:0">我的DApps</div>
+					<div class="my-dapp-box">
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
 						
-						<div class="item" v-on:tap="tapWallet(item.private_key,item.address,item.wallet_name)" v-for="item in wallet">
-							<div class="mui-pull-left wallet-img">{{item.wallet_name.substr(0,1).toUpperCase()}}</div>
-							<div class="mui-pull-left wallet-info">
-								<p class="name">
-									{{item.wallet_name}}
-								</p>
-								<p class="amount">
-									<span>$</span>{{item.assets_amount.toFixed(2)}}
-								</p>
+						</div>
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list my-more">
+							<span class="icon iconfont icon-more"></span>
+							
+						</div>
+					</div>
+				</div>	 -->
+				<div class="app-list">
+					<div class="app-list-cat">
+						
+						<div :class="{'app-cat-active':cat==false}" v-on:tap="cat_filter(false)">全部</div>
+						<div :class="{'app-cat-active':cat=='工具'}" v-on:tap="cat_filter('工具')">工具</div>
+						<div :class="{'app-cat-active':cat=='金融'}" v-on:tap="cat_filter('金融')" >金融</div>
+						<div :class="{'app-cat-active':cat=='社区'}" v-on:tap="cat_filter('社区')">社区</div>
+					</div>					
+					<div class="app-list-data">
+						<div class="app-list-data-item" v-for="(item, index) in dapp" v-if="(cat==false) || (cat!=false && item.cat==cat)" v-on:tap="open_url(item.url,item.title)">
+							<div>
+								<img :src="item.img" alt="">
+							</div>
+							<div>
+								<p class="app-title">{{item.title}}</p>
+								<p>{{item.des}}</p>
+							</div>
+							<div class="app-more">
+								<span class="icon iconfont icon-more"></span>
 							</div>
 						</div>
-						
+					
 					</div>
-				</div>
-			</div>
-			
-		</div>
-		
-		
-		<!--右上角弹出菜单-->
-		<div id="topPopover" class="mui-popover add-import-btn-box">
-			
-			<div class="item" id="create-btn">
-				创建钱包
-			</div>
-			<div class="item" id="import-btn">
-				助记词导入
-			</div>
-			<div class="item" id="import-private-btn">
-				私钥导入
-			</div>
-			
-		</div>
-		
-		<div id="header-menu" class="mui-popover header-menu">
-			
-			<div class="item receive-btn" id="receive-btn">
-				<span class="mui-icon icon iconfont icon-qrcode"></span>接收
-			</div>
-<!--			<div class="item" id="send-btn">-->
-<!--				<span class="mui-icon icon iconfont icon-label"></span>发送-->
-<!--			</div>-->
+				</div>	
+			</div>	
 		</div>
 		
 	</body>
@@ -127,313 +108,150 @@
 	<script src="../js/vue.min.js"></script>
 	
 	<script type="text/javascript">
-           
-
-		var assetsAmount = 0;
-		var qkiAmount = 0;
-		var cctAmount = 0;
-		var ethAmount = 0;
-		var usdtAmount = 0;
-		var walletList = [];
 		
-		if(mui.os.ios)
-		{
-			mui.init({
-				//侧滑关闭
-				swipeBack:true, //Boolean(默认false)启用右滑关闭功能
-				beforeback: function() {
-					return false;
-				},
-				pullRefresh: {
-					
-					container: '#content',
-					down: {
-						height:50,
-						contentdown : "",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
-						contentover : " ",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
-						contentrefresh : " ",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
-						callback: pulldownRefresh,
-					}
-				}
-			})
-		}
-		else
-		{
-			mui.init({
-				//侧滑关闭
-				swipeBack:true, //Boolean(默认false)启用右滑关闭功能
-				beforeback: function() {
-					return false;
-				},
-				pullRefresh: {
-					container: '#content',
-					down: {
-						style:'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
-						color:'#222222', //可选，默认“#2BD009” 下拉刷新控件颜色
-						height:'50px',//可选,默认50px.下拉刷新控件的高度,
-						range:'100px', //可选 默认100px,控件可下拉拖拽的范围
-						offset:'0px', //可选 默认0px,下拉刷新控件的起始位置
-						auto: false,//可选,默认false.首次加载自动上拉刷新一次
-						callback: pulldownRefresh,
-					},
-				}
-			})
-		}
-		
-		vm = new Vue({
-			el: '#content',
-			data: {
-				assetsAmount:assetsAmount,
-				qkiAmount:qkiAmount,
-				cctAmount:cctAmount,
-				ethAmount:ethAmount,
-				usdtAmount:usdtAmount,
-				wallet:walletList
+	   var dapp_data = [{
+			   title:'区块浏览器',
+			   url:'http://qkiscan.cn/',
+			   des:'可以查询所有基于夸克区块链的TOKEN信息,及交易情况...',
+			   cat:'工具',
+			   img:'../images/ico/browser-ico.png'
+		   },
+		   {
+			   title:'dddotc',
+			   url:'https://dddotc.com',
+			   des:'用于交易基于夸克区块链的TOKEN，如USDT、QKI、CCT等',
+			   cat:'金融',
+			   img:'../images/ico/ddd-ico.png'
+		   },
+		   {
+			   title:'cct200',
+			   url:'https://cct200.org',
+			   des:'用于交易基于夸克区块链的TOKEN，如USDT、QKI、CCT等。',
+			   cat:'金融',
+			   img:'../images/ico/200cct-ico.png'
+		   },
+		   {
+			   title:'夸克生态导航',
+			   url:'https://qkinav.space/',
+			   des:'汇集了与夸克区块链相关的网页，包括钱包下载、APP下载、新闻资讯等。',
+			   cat:'社区',
+			   img:'../images/ico/nav-ico.png'
+		   },
+		   {
+			   title:'夸克资讯',
+			   url:'https://www.chainchat.ooo/',
+			   des:'用于发布夸克区块链相关新闻及规则解读，让用户第一时间获取信息。',
+			   cat:'社区',
+			   img:'../images/ico/news-ico.png'
+		   },
+		   {
+			   title:'夸克商学院',
+			   url:'https://cct-qki.typlog.io/',
+			   des:'大量优秀讲师在夸克商学院内用简单易懂的语音形式进行讲课。',
+			   cat:'社区',
+			   img:'../images/ico/college-ico.png'
+		   },
+		   {
+			   title:'夸克生态纪实',
+			   url:'https://chain-chat-org.github.io/anniversaryofqki.github.io/',
+			   des:'记录夸克区块链成长的每一天。',
+			   cat:'社区',
+			   img:'../images/ico/record-ico.png'
+		   },
+		   {
+			   title:'qkf空投系统',
+			   url:'https://airdrop.qkfile.org/',
+			   des:'空投基于分布式文件系统QKFile产生的数字资产（QKF）。',
+			   cat:'金融',
+			   img:'../images/ico/qkf-ico.png'
+		   },
+		   {
+			   title:'链信任务模拟器',
+			   url:'https://www.haozhuanya.com/item/simulator/',
+			   des:'计算不同时间及不同等级的CCT任务收益。',
+			   cat:'工具',
+			   img:'../images/ico/task-ico.png'
+		   },
+		   {
+			   title:'cct-cool',
+			   url:'https://cct.cool/',
+			   des:'cool导航站。',
+			   cat:'工具',
+			   img:'../images/ico/nav-ico.png'
+		   },		
+		   {
+			   title:'QKFILE播放器',
+			   url:'https://airdrop.qkfile.org/video.html',
+			   des:'基于分布式文件系统QKFile打造的音频播放器。',
+			   cat:'工具',
+			   img:'../images/ico/vide-ico.png'
+		   },	
+			{
+			   title:'区块浏览器2',
+			   url:'https://qkiview.com/',
+			   des:'可以查询所有基于夸克区块链的TOKEN信息,及交易情况...',
+			   cat:'工具',
+			   img:'../images/ico/browser-ico.png'
+			}		  
+	   ];
+	   var banner_data = [
+		   {
+			   title:'dddotc',
+			   url:'https://dddotc.com/',
+			   img:'../images/banner-1.png'
 			},
-			methods: {
+			{
+			   title:'区块浏览器',
+			   url:'http://qkiscan.cn/',
+			   img:'../images/banner-2.png'
+			},
+			{
+				title:'夸克商学院',
+				url:'https://cct-qki.typlog.io/',
+				img:'../images/banner-3.png'
+			}			
+	   ]
+	   vm = new Vue({
+		el: '#content',
+		data: {
+			dapp:dapp_data,
+			banner:banner_data,
+			cat:false
+		},
+		methods: {	
+			open_url: function (url,title) {	
 				
-				tapWallet: function (private_key,address,wallet_name) {
-					refreshIndex();	
-					localStorage.setItem("send-type",0);
-					mui.openWindow({
-						url: "wallet/wallet-inner.html",
-						id: "wallet-inner.html",
-						extras:{
-							private_key:private_key,
-							address:address,
-							wallet_name:wallet_name
-						},
-						show:{
-							autoShow:true,
-							aniShow:'slide-in-right',
-						},
-						waiting:{
-							autoShow:false,
-						}
-					});
-						
-				},
+				var btnArray = ['取消', '进入'];
+				    mui.confirm('您将进入第三方应用页面？', '风险提示', btnArray, function(e) {
+				        if (e.index == 1) {
+							plus.runtime.openURL(url); //调用浏览器打开网址  
+				            // mui.openWindow({
+				            // 	url: "dapp/index.html",
+				            // 	id: "dapp-index.html",
+				            // 	extras:{
+				            // 		url:url,
+				            // 		title:title,						
+				            // 	},
+				            // 	show:{
+				            // 		autoShow:true,
+				            // 		aniShow:'slide-in-right',
+				            // 	},
+				            // 	waiting:{
+				            // 		autoShow:false,
+				            // 	}
+				            // });
+				        }
+				    });			
+			},
+			cat_filter:function(title,e){
+				vm.cat = title;
 			}
-		});
-	
-
-		mui.plusReady(function() {
-	
-			walletList = showWallet();
-			if(walletList.length < 1)
-			{
-				document.getElementById("no-data-tip").style.display = "block";
-			}
-			else
-			{
-				document.getElementById("no-data-tip").style.display = "none";
-			}
-		
-			getBalance();
-			updateWallet();
-			updatelLegalMoney();
-		
-			assetsAmount = getAssetsAmount();
-			app_update();
-			
-			//显示所有钱包
-			vm.wallet = showWallet();
-			//显示总资产(法币)
-			vm.assetsAmount = getAssetsAmount();
-			vm.qkiAmount = getAssetsSumBalance("QKI");
-			vm.cztAmount = getAssetsSumBalance("CZT");
-			vm.cctAmount = getAssetsSumBalance("CCT");
-			vm.ethAmount = getAssetsSumBalance("ETH");
-			vm.usdtAmount =  getAssetsSumBalance("USDT");
-		})
-		
-		h("#create-btn").tap(function(){
-			plus.storage.setItem("is_create",1);
-			mui('#topPopover').popover('hide');
-			mui.openWindow({
-				url: "wallet/create-wallet.html",
-				id: "create-wallet.html",
-				show:{
-					autoShow:true,
-					aniShow:'slide-in-right',
-				}, 
-				waiting:{
-					autoShow:false,
-				}
-			});
-			
-		});
-		
-		h("#import-btn").tap(function(){
-			
-			mui('#topPopover').popover('hide');
-			mui.openWindow({
-				url: "wallet/import/import-step-1.html",
-				id: "import-step-1.html",
-				show:{
-					autoShow:true,
-					aniShow:'slide-in-right',
-				}, 
-				waiting:{
-					autoShow:false,
-				}
-			});
-	
-		});
-		
-		h("#import-private-btn").tap(function(){
-			
-			mui('#topPopover').popover('hide');
-			mui.openWindow({
-				url: "wallet/import/import-private-step-1.html",
-				id: "import-private-step-1.html",
-				show:{
-					autoShow:true,
-					aniShow:'slide-in-right',
-				}, 
-				waiting:{
-					autoShow:false,
-				}
-			});
-	
-		});
-		
-		h("#scan-btn").tap(function(){
-			
-			mui.openWindow({
-				url: "wallet/scan/scan-1.html",
-				id: "scan-1.html",
-				show:{
-					autoShow:true,
-					aniShow:'slide-in-right',
-				}, 
-				waiting:{
-					autoShow:false,
-				}
-			});
-	
-		});
-		
-		h("#receive-btn").tap(function(){
-			
-			var address = "";
-			var accounts = plus.storage.getItem('accounts');			
-			if(!accounts)
-			{
-				accounts = new Array();
-			}
-			else
-			{
-				accounts = JSON.parse(accounts);
-			}
-			for(var i in accounts)
-			{
-				if(accounts[i].wallet_default == 1)
-				{
-					address = accounts[i].address;
-				}
-			}
-			
-			mui.openWindow({
-				url: "wallet/receive.html",
-				id: "receive.html",
-				extras:{
-					address:address,
-					assets_name:"QKI"
-				},
-				show:{
-					autoShow:true,
-					aniShow:'slide-in-right',
-				}, 
-				waiting:{
-					autoShow:false,
-				}
-			});
-			
-		})
-		
-		// h("#send-btn").tap(function(){
-		//
-		// 	var address = "";
-		// 	var accounts = plus.storage.getItem('accounts');
-		// 	if(!accounts)
-		// 	{
-		// 		accounts = new Array();
-		// 	}
-		// 	else
-		// 	{
-		// 		accounts = JSON.parse(accounts);
-		// 	}
-		// 	for(var i in accounts)
-		// 	{
-		// 		if(accounts[i].wallet_default == 1)
-		// 		{
-		// 			address = accounts[i].address;
-		// 		}
-		// 	}
-		// 	localStorage.setItem("send-type",2);
-		// 	mui.openWindow({
-		// 		url: 'wallet/send-step-1.html',
-		// 		id: 'send-step-1.html',
-		// 		extras:{
-		// 			address:address,
-		// 			assets_name:"QKI"
-		// 		},
-		// 		show: {
-		// 			autoShow:true,
-		// 		},
-		// 		waiting: {
-		// 			autoShow: false
-		// 		}
-		// 	});
-		//
-		// })
-		
-		/**
-		* 下拉刷新具体业务实现
-		*/
-		function pulldownRefresh() {
-			setTimeout(function() {
-				
-				refreshIndex();
-				
-				mui('#content').pullRefresh().endPulldownToRefresh();
-			}, 1500);
 		}
-	
-		//定义首页刷新事件
-		document.addEventListener('fresh-wallet', function() {
-			refreshIndex();
+	   });
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+		  interval:4000//自动轮播周期，若为0则不自动播放，默认为0；
 		});
-		
-		//刷新首页
-		function refreshIndex()
-		{
-			var walletList = showWallet();
-			if(walletList.length < 1)
-			{
-				document.getElementById("no-data-tip").style.display = "block";
-			}
-			else
-			{
-				document.getElementById("no-data-tip").style.display = "none";
-			}
-			//获取每个钱包的各个数字资产余额
-			getBalance();
-			//更新每个资产的法币金额
-			updatelLegalMoney();
-			//更新每个钱包的资产余额（法币）
-			updateWallet();
-			//显示所有钱包
-			vm.wallet = showWallet();
-			//显示总资产(法币)
-			vm.assetsAmount = getAssetsAmount();
-			vm.qkiAmount = getAssetsSumBalance("QKI");
-			vm.cctAmount = getAssetsSumBalance("CCT");
-			vm.ethAmount = getAssetsSumBalance("ETH");
-			vm.usdtAmount =  getAssetsSumBalance("USDT");
-			
-		}
 		
 	</script>
 </html>

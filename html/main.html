@@ -20,6 +20,9 @@
 			<a id="defaultTab" class="mui-tab-item mui-active" href="tab-subpage-index.html">
 				<span class="mui-icon icon iconfont icon-integral_fill"></span>
 			</a>
+			<a id="dAppTab" class="mui-tab-item" href="tab-subpage-dapp.html">
+				<span class="mui-icon icon iconfont icon-manage_fill"></span>
+			</a>
 			<a id="contactsTap" class="mui-tab-item" href="tab-subpage-contacts.html">
 				<span class="mui-icon icon iconfont icon-addressbook_fill"></span>
 			</a>
@@ -39,7 +42,7 @@
 				},
 			})
 			
-			var subpages = ['tab-subpage-index.html', 'tab-subpage-contacts.html', 'tab-subpage-setting.html'];
+			var subpages = ['tab-subpage-index.html', 'tab-subpage-dapp.html', 'tab-subpage-contacts.html', 'tab-subpage-setting.html'];
 			var subpage_style = {
 				top: '0',
 				bottom: '51px'
@@ -59,7 +62,7 @@
 				}
 				
 				var self = plus.webview.currentWebview();
-				for (var i = 0; i < 3; i++) {
+				for (var i = 0; i < 4; i++) {
 					var temp = {};
 					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 					if (i > 0) {
@@ -129,7 +132,18 @@
 					contactsTap.classList.add('mui-active');
 				}
 			});
-		
+			//自定义事件，模拟点击“首页选项卡”
+			document.addEventListener('dApp', function() {
+				var defaultTab = document.getElementById("dAppTab");
+				//模拟首页点击
+				mui.trigger(defaultTab, 'tap');
+				//切换选项卡高亮
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if (defaultTab !== current) {
+					current.classList.remove('mui-active');
+					defaultTab.classList.add('mui-active');
+				}
+			});
 		</script>
 	</body>
 
