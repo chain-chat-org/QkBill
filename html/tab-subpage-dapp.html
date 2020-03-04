@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>quark-bill</title>
+		<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="../css/app.css">
+		<link rel="stylesheet" href="../fonts/iconfont.css">
+		<link rel="stylesheet" href="../css/dapp.css">
+		<style>
+			.mui-slider .mui-slider-group .mui-slider-item{
+				padding:0 10px;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {			  
+				border-radius: 10px;				
+			}
+		</style>	
+	</head>
+	<body class="index-page">
+	
+		<div class="mui-content " id="content">
+			
+			<div class="">
+				<div class="mui-slider">
+				  <div class="mui-slider-group mui-slider-loop">
+				    <!--支持循环，需要重复图片节点-->
+				    <div class="mui-slider-item mui-slider-item-duplicate"><img :src="banner[banner.length-1].img" v-if='banner.length>0'/></div>
+				    <div class="mui-slider-item" v-for="item in banner" v-on:tap="open_url(item.url,item.title)"><img :src="item.img" /></div>
+				   
+				    <!--支持循环，需要重复图片节点-->
+				    <div class="mui-slider-item mui-slider-item-duplicate" ><img :src="banner[0].img" v-if='banner.length>0' /></div>
+				  </div>
+				  <div class="mui-slider-indicator">	
+				    <div class="mui-indicator mui-active" v-for="(item,key) in banner" v-if="key==0"></div>
+				    <div class="mui-indicator" v-for="(item,key) in banner" v-if="key!=0"></div>		
+				  </div>
+				</div>
+				<div class="dapp-list">
+					<div class="list-item" v-for="(item, index) in dapp" v-if="index<=9" v-on:tap="open_url(item.url,item.title)">
+						<img :src="item.img" alt="" width="100%" >
+						<div class="app_name">{{item.title}}</div>
+					</div>
+					
+				</div>
+				<!-- <div class="my-dapp" >
+					
+					<div style="flex-shrink:0">我的DApps</div>
+					<div class="my-dapp-box">
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list">
+							<img src="../images/about-logo.png" alt="" width="100%" >
+						
+						</div>
+						<div class="my-dapp-list my-more">
+							<span class="icon iconfont icon-more"></span>
+							
+						</div>
+					</div>
+				</div>	 -->
+				<div class="app-list">
+					<div class="app-list-cat">
+						
+						<div :class="{'app-cat-active':cat==false}" v-on:tap="cat_filter(false)">全部</div>
+						<div :class="{'app-cat-active':cat=='工具'}" v-on:tap="cat_filter('工具')">工具</div>
+						<div :class="{'app-cat-active':cat=='金融'}" v-on:tap="cat_filter('金融')" >金融</div>
+						<div :class="{'app-cat-active':cat=='社区'}" v-on:tap="cat_filter('社区')">社区</div>
+					</div>					
+					<div class="app-list-data">
+						<div class="app-list-data-item" v-for="(item, index) in dapp" v-if="(cat==false) || (cat!=false && item.cat==cat)" v-on:tap="open_url(item.url,item.title)">
+							<div>
+								<img :src="item.img" alt="">
+							</div>
+							<div>
+								<p class="app-title">{{item.title}}</p>
+								<p>{{item.des}}</p>
+							</div>
+							<div class="app-more">
+								<span class="icon iconfont icon-more"></span>
+							</div>
+						</div>
+					
+					</div>
+				</div>	
+			</div>	
+		</div>
+		
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/immersed.js"></script>
+	<script src="../js/h.min.js"></script>
+	<script src="../js/ethers.min.js"></script>
+	<script src="../js/app.js"></script>
+	<script src="../js/math.min.js"></script>
+	<script src="../js/vue.min.js"></script>
+	
+	<script type="text/javascript">
+		
+	   var dapp_data = [{
+			   title:'区块浏览器',
+			   url:'http://qkiscan.cn/',
+			   des:'可以查询所有基于夸克区块链的TOKEN信息,及交易情况...',
+			   cat:'工具',
+			   img:'../images/ico/browser-ico.png'
+		   },
+		   {
+			   title:'DDDOTC',
+			   url:'https://dddotc.com',
+			   des:'用于交易基于夸克区块链的TOKEN，如USDT、QKI、CCT等',
+			   cat:'金融',
+			   img:'../images/ico/ddd-ico.png'
+		   },
+		   {
+			   title:'CCT200',
+			   url:'https://cct200.org',
+			   des:'用于交易基于夸克区块链的TOKEN，如USDT、QKI、CCT等。',
+			   cat:'金融',
+			   img:'../images/ico/200cct-ico.png'
+		   },
+		   {
+			   title:'夸克生态导航',
+			   url:'https://qkinav.space/',
+			   des:'汇集了与夸克区块链相关的网页，包括钱包下载、APP下载、新闻资讯等。',
+			   cat:'社区',
+			   img:'../images/ico/nav-ico.png'
+		   },
+		   {
+			   title:'夸克资讯',
+			   url:'https://www.chainchat.ooo/',
+			   des:'用于发布夸克区块链相关新闻及规则解读，让用户第一时间获取信息。',
+			   cat:'社区',
+			   img:'../images/ico/news-ico.png'
+		   },
+		   {
+			   title:'夸克商学院',
+			   url:'https://cct-qki.typlog.io/',
+			   des:'大量优秀讲师在夸克商学院内用简单易懂的语音形式进行讲课。',
+			   cat:'社区',
+			   img:'../images/ico/college-ico.png'
+		   },
+		   {
+			   title:'夸克生态纪实',
+			   url:'https://chain-chat-org.github.io/anniversaryofqki.github.io/',
+			   des:'记录夸克区块链成长的每一天。',
+			   cat:'社区',
+			   img:'../images/ico/record-ico.png'
+		   },
+		   {
+			   title:'QKF空投系统',
+			   url:'https://airdrop.qkfile.org/',
+			   des:'空投基于分布式文件系统QKFile产生的数字资产（QKF）。',
+			   cat:'金融',
+			   img:'../images/ico/qkf-ico.png'
+		   },
+		   {
+			   title:'链信任务模拟器',
+			   url:'https://www.haozhuanya.com/item/simulator/',
+			   des:'计算不同时间及不同等级的CCT任务收益。',
+			   cat:'工具',
+			   img:'../images/ico/task-ico.png'
+		   },
+		   {
+			   title:'CCT-COOL',
+			   url:'https://cct.cool/',
+			   des:'cool导航站。',
+			   cat:'工具',
+			   img:'../images/ico/nav-ico.png'
+		   },		
+		   {
+			   title:'QKFILE播放器',
+			   url:'https://airdrop.qkfile.org/video.html',
+			   des:'基于分布式文件系统QKFile打造的音频播放器。',
+			   cat:'工具',
+			   img:'../images/ico/vide-ico.png'
+		   },	
+			{
+			   title:'区块浏览器2',
+			   url:'https://qkiview.com/',
+			   des:'可以查询所有基于夸克区块链的TOKEN信息,及交易情况...',
+			   cat:'工具',
+			   img:'../images/ico/browser-ico.png'
+			}		  
+	   ];
+	   var banner_data = [
+		   {
+			   title:'DDDOTC',
+			   url:'https://dddotc.com/',
+			   img:'../images/banner-1.png'
+			},
+			{
+			   title:'区块浏览器',
+			   url:'http://qkiscan.cn/',
+			   img:'../images/banner-2.png'
+			},
+			{
+				title:'夸克商学院',
+				url:'https://cct-qki.typlog.io/',
+				img:'../images/banner-3.png'
+			}			
+	   ]
+	   vm = new Vue({
+		el: '#content',
+		data: {
+			dapp:dapp_data,
+			banner:banner_data,
+			cat:false
+		},
+		methods: {	
+			open_url: function (url,title) {	
+				
+				var btnArray = ['取消', '进入'];
+				    mui.confirm('您将进入第三方应用页面？', '风险提示', btnArray, function(e) {
+				        if (e.index == 1) {
+							plus.runtime.openURL(url); //调用浏览器打开网址  
+				            // mui.openWindow({
+				            // 	url: "dapp/index.html",
+				            // 	id: "dapp-index.html",
+				            // 	extras:{
+				            // 		url:url,
+				            // 		title:title,						
+				            // 	},
+				            // 	show:{
+				            // 		autoShow:true,
+				            // 		aniShow:'slide-in-right',
+				            // 	},
+				            // 	waiting:{
+				            // 		autoShow:false,
+				            // 	}
+				            // });
+				        }
+				    });			
+			},
+			cat_filter:function(title,e){
+				vm.cat = title;
+			}
+		}
+	   });
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+		  interval:4000//自动轮播周期，若为0则不自动播放，默认为0；
+		});
+		
+	</script>
+</html>

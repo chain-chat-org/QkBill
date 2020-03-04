@@ -1,0 +1,100 @@
+body .mui-content{
+	background: #f4f5f7;
+}
+
+.dapp-list{
+	margin:15px 0;
+	overflow: hidden;
+}
+.dapp-list .list-item{
+	width:20%;
+	float:left;
+	padding:0 10px;
+	text-align: center;
+	color:#666;
+	word-wrap:break-word;
+	margin-bottom:5px;	
+}
+.dapp-list .list-item img{
+	border-radius: 10px;
+}
+.dapp-list .list-item .app_name{
+	height:22px;
+	overflow: hidden;
+	font-size:12px;
+}
+.my-dapp{
+	padding:0 10px;
+	display: flex;
+	align-items:center;
+}
+.my-dapp .my-dapp-list{
+	width:20%;
+	padding:0 5px;
+	color:#666;
+	word-wrap:break-word;
+}
+.my-dapp .my-dapp-list img{
+	border-radius: 10px;
+	vertical-align:middle;
+}
+.my-dapp-box{
+	display: flex;
+}
+.my-dapp .my-dapp-list.my-more{
+	background: #fff;
+	border-radius: 10px;
+	padding:0;
+	margin:0 5px;
+	display: flex;
+	align-items:center;
+	justify-content:center;
+}
+.my-dapp .my-dapp-list.my-more .iconfont{
+	font-size:40px;
+	color:#bdbdbd;
+}
+.app-list .app-list-cat{
+	display: flex;
+	padding:0 10px;
+	margin:20px 0;
+}
+.app-list .app-list-cat div{
+	margin-right:15px;
+}
+.app-list .app-list-cat div.app-cat-active{
+	color:#5873b5;
+	border-bottom: 2px solid #5873b5;
+}
+.app-list-data{
+	padding:0 10px;
+}
+.app-list-data .app-list-data-item{
+	background: #fff;
+	border-radius: 10px;
+	padding:10px;
+	display: flex;
+	align-items:center;
+	margin-bottom:10px;
+}
+.app-list-data .app-list-data-item img{
+	width:60px;
+	margin-right:15px;
+	border-radius: 10px;
+	vertical-align:middle;
+}
+.app-list-data .app-list-data-item p{
+	margin:0;
+	font-size:14px;
+}
+.app-list-data .app-list-data-item p.app-title{
+	color:#000;
+	font-weight: bold;
+}
+.app-list-data .app-more{
+	margin-left:auto
+}
+.app-list-data .app-more .icon-more{
+	font-size:30px;
+	color:#aaa;
+}
