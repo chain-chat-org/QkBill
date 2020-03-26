@@ -129,7 +129,7 @@
                         "spotlight" : "unpackage/res/icons/40x40.png",
                         "spotlight@2x" : "unpackage/res/icons/80x80.png"
                     },
-                    "appstore" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动图标-BKBILL.png"
+                    "appstore" : "unpackage/res/icons/1024x1024.png"
                 },
                 "android" : {
                     "mdpi" : "unpackage/res/icons/48x48.png", /*必选，48x48，普通屏程序图标*/
@@ -144,16 +144,16 @@
                 "ios" : {
                     "iphone" : {
                         "default" : "", /*必选，320x480，iPhone3启动图片*/
-                        "retina35" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/640-960.png", /*必选，640x960，3.5英寸设备(iPhone4)启动图片*/
-                        "retina40" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/640-1136.png",
-                        "retina47" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/750-1334.png",
-                        "retina55" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/1242-2208.png",
-                        "iphonex" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/1125-2436.png",
-                        "portrait-896h@2x" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/828-1792.png",
-                        "landscape-896h@2x" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/1792-828.png",
+                        "retina35" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/640-960.png", /*必选，640x960，3.5英寸设备(iPhone4)启动图片*/
+                        "retina40" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/640-1136.png",
+                        "retina47" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/750-1334.png",
+                        "retina55" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/1242-2208.png",
+                        "iphonex" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/1125-2436.png",
+                        "portrait-896h@2x" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/828-1792.png",
+                        "landscape-896h@2x" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/1792-828.png",
                         "protrait-896h@3x" : "/Users/macarons/Downloads/启动页/1792-828.png",
-                        "landscape-896h@3x" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/2688-1242.png",
-                        "portrait-896h@3x" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/1242-2688.png"
+                        "landscape-896h@3x" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/2688-1242.png",
+                        "portrait-896h@3x" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/1242-2688.png"
                     },
                     "ipad" : {
                         "portrait" : "", /*可选，768x1004，需支持iPad时必选，iPad竖屏启动图片*/
@@ -169,9 +169,9 @@
                 "android" : {
                     "mdpi" : "", /*必选，240x282，普通屏启动图片*/
                     "ldpi" : "", /*必选，320x442，大屏启动图片*/
-                    "hdpi" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/480-762.png", /*必选，480x762，高分屏启动图片*/
-                    "xhdpi" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/720-1242.png", /*必选，720x1242，720P高分屏启动图片*/
-                    "xxhdpi" : "/Users/macarons/Desktop/公司资料/QkBill钱包/启动页/1080-1882.png"
+                    "hdpi" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/480-762.png", /*必选，480x762，高分屏启动图片*/
+                    "xhdpi" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/720-1242.png", /*必选，720x1242，720P高分屏启动图片*/
+                    "xxhdpi" : "/Users/macarons/Documents/项目资料/QkBill/QkBill钱包/启动页/1080-1882.png"
                 }
             },
             "plugins" : {
