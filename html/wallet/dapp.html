@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>quark-bill</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/app.css">
+    <link rel="stylesheet" href="../../fonts/iconfont.css">
+    <style type="text/css">
+
+        .box {
+            padding: 20px 20px;
+        }
+        .mui-table-view:before {
+            height: 0;
+        }
+        .mui-table-view:after {
+            height: 0;
+        }
+        .mui-table-view-cell:after {
+            height: 0 !important;
+        }
+        .mui-table-view-cell.mui-active {
+            background: none !important;
+        }
+        .mui-navigate-right.mui-active {
+            background: none !important;
+        }
+        .mui-table-view-cell.mui-collapse .mui-collapse-content {
+            background: none !important;
+        }
+        .table-box {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+        .mui-collapse-content .title {
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .item {
+            margin-top: 10px;
+        }
+        .item .text {
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+        }
+        .item .text span {
+            color: red;
+        }
+        .item input {
+            margin-top: 10px;
+            border: 1px solid rgba(0,0,0,.1);
+        }
+        .btn {
+            display: block;
+            margin: 0 auto;
+        }
+        .mui-navigate-right {
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body class="manage-wallet-page">
+
+<header class="mui-bar mui-bar-nav app-header-1" id="header">
+    <a class="mui-action-back mui-icon icon iconfont icon-return mui-pull-left"></a>
+    <h1 class="mui-title">合约调用</h1>
+</header>
+
+<div id="content" class="mui-content mui-scroll-wrapper">
+    <div class="mui-scroll">
+        <div class="box">
+            <ul class="mui-table-view table-box">
+                <li class="mui-table-view-cell mui-collapse" v-for="method in abi">
+                    <a class="mui-navigate-right" href="#">{{method.name}}</a>
+                    <div class="mui-collapse-content" v-if="method.inputs">
+                        <div class="item" v-for="input in method.inputs">
+                            <p class="text">{{input.name}}<span>*</span></p>
+                            <input type="text" v-id="input.name" v:placeholder="input.name"/>
+                        </div>
+                        <div class="item">
+                            <p class="text">_to<span>*</span></p>
+                            <input type="text" placeholder="address"/>
+                        </div>
+                        <div class="item">
+                            <p class="text">_value<span>*</span></p>
+                            <input type="text" placeholder="address"/>
+                        </div>
+                        <button type="button" class="mui-btn mui-btn-primary btn">submit</button>
+                    </div>
+                </li>
+            </ul>
+            <ul class="mui-table-view table-box">
+                <li class="mui-table-view-cell mui-collapse">
+                    <a class="mui-navigate-right" href="#">面板1</a>
+                    <div class="mui-collapse-content">
+                        <p>面板1子内容</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/immersed.js"></script>
+<script src="../../js/h.min.js"></script>
+<script src="../../js/vue.min.js"></script>
+<script src="../../js/app.js"></script>
+<script>
+
+    mui.init({
+        gestureConfig: {
+            longtap: true, //默认为false
+        },
+        swipeBack:true //启用右滑关闭功能
+    });
+
+    var address = "";
+    var assets_name = "";
+    mui.plusReady(function() {
+        var self = plus.webview.currentWebview();
+        address = self.address;
+        assets_name = self.assets_name;
+        main_chain = self.main_chain;
+        //获取资产
+        var assets = getAssets(address,assets_name,main_chain);
+    });
+
+    const json = '[ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "amount", "type": "uint256" } ], "name": "withdrawEther", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "burn", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "unfreeze", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "freezeOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "freeze", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256" }, { "name": "tokenName", "type": "string" }, { "name": "decimalUnits", "type": "uint8" }, { "name": "tokenSymbol", "type": "string" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Freeze", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Unfreeze", "type": "event" } ]';
+    const obj = JSON.parse(json);
+    var app = new Vue({
+        el: '#content',
+        data: {
+            message: 'Hello Vue!',
+            abi:obj
+        }
+    });
+</script>
+</html>

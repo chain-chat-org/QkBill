@@ -15,6 +15,7 @@
 		<header class="mui-bar mui-bar-nav app-header-1" id="header" v-cloak>
 			<a class="mui-action-back mui-icon icon iconfont icon-return mui-pull-left"></a>
 			<h1 class="mui-title">{{assets_name}}</h1>
+			<a class="mui-icon icon iconfont icon-more mui-pull-right index-more-icon" href="#header-menu"></a>
 		</header>
 		
 		<nav class="mui-bar mui-bar-tab transfer-bar">
@@ -73,8 +74,13 @@
 			</div>
 				
 		</div>
-			
-		
+
+		<div id="header-menu" class="mui-popover header-menu">
+
+			<div class="item receive-btn" id="contract-btn">
+				<span class="mui-icon"></span>合约调用
+			</div>
+		</div>
 	</body>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/immersed.js"></script>
@@ -225,6 +231,26 @@
 				});
 				
 			});
+
+			h("#contract-btn").tap(function(){
+
+				mui.openWindow({
+					url: "dapp.html",
+					id: "dapp.html",
+					extras:{
+						assets_name:assets_name,
+						main_chain:main_chain,
+						address:address
+					},
+					show:{
+						autoShow:true,
+						aniShow:'slide-in-right',
+					},
+					waiting:{
+						autoShow:false,
+					},
+				});
+			})
 			
 		})
 		
