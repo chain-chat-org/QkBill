@@ -171,9 +171,29 @@
                 // 创建智能合约
                 contract = new ethers.Contract(assets.token_address, abi, walletWithProvider);
 
-                var gasLimit = 150000;
 
-                contract.method.name()
+                var fullCode="contract."+method.name+"(";
+                
+                for (i=0;i<method.inputs.length;i++)
+                {
+                    fullCode += "\"" + item[method.name][method.inputs[i]] +"\",";
+                }
+                if(fullCode.indexOf(",")>0)
+                fullCode = fullCode.substr(0,fullCode.length-1);
+                fullCode +=").then(function (data) {" +
+                        "mui.toast(data)"+
+                    "},function (data){mui.toast(data)});";
+				
+				console.log(fullCode)
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                try {
+                    script.appendChild(document.createTextNode(fullCode));
+                } catch (ex) {
+                    script.text = fullCode;
+                }
+                document.body.appendChild(script);
+
 
             }
         }
