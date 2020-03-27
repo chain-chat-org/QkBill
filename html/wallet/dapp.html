@@ -176,7 +176,7 @@
                 
                 for (i=0;i<method.inputs.length;i++)
                 {
-                    fullCode += "\"" + item[method.name][method.inputs[i]] +"\",";
+                    fullCode += "\"" + item[method.name][method.inputs[i].name] +"\",";
                 }
                 if(fullCode.indexOf(",")>0)
                 fullCode = fullCode.substr(0,fullCode.length-1);
