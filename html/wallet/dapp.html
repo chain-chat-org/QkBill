@@ -79,7 +79,8 @@
     <div class="mui-scroll">
         <div class="box">
             <ul class="mui-table-view table-box">
-                <li class="mui-table-view-cell mui-collapse" v-for="method in abi">
+                <li class="mui-table-view-cell mui-collapse" v-for="method in abi"
+                    v-if="method.constant && method.type == 'function'">
                     <a class="mui-navigate-right" href="#">{{method.name}}</a>
                     <div class="mui-collapse-content" v:id="input.name" v-if="method.inputs">
                         <div class="item" v-for="input in method.inputs">
@@ -91,11 +92,18 @@
                     </div>
                 </li>
             </ul>
+
             <ul class="mui-table-view table-box">
-                <li class="mui-table-view-cell mui-collapse">
-                    <a class="mui-navigate-right" href="#">面板1</a>
-                    <div class="mui-collapse-content">
-                        <p>面板1子内容</p>
+                <li class="mui-table-view-cell mui-collapse" v-for="method in abi"
+                    v-if="!method.constant && method.type == 'function'">
+                    <a class="mui-navigate-right" href="#">{{method.name}}</a>
+                    <div class="mui-collapse-content" v:id="input.name" v-if="method.inputs">
+                        <div class="item" v-for="input in method.inputs">
+                            <p class="text">{{input.name}}<span>*</span></p>
+                            <input type="text" v-model="item[method.name][input.name]" v:placeholder="input.name"/>
+                        </div>
+                        <button type="button" class="mui-btn mui-btn-primary btn" v-on:click="dapp_method(method)">submit
+                        </button>
                     </div>
                 </li>
             </ul>
@@ -121,6 +129,8 @@
 
     var address = "";
     var assets_name = "";
+	abi = {};
+	
     mui.plusReady(function() {
         var self = plus.webview.currentWebview();
         address = self.address;
@@ -130,73 +140,98 @@
         wallet = getWallet(address);
         //获取资产
         assets = getAssets(address,assets_name,main_chain);
-    });
 
-    const abi = [ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "amount", "type": "uint256" } ], "name": "withdrawEther", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "burn", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "unfreeze", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "freezeOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "freeze", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256" }, { "name": "tokenName", "type": "string" }, { "name": "decimalUnits", "type": "uint8" }, { "name": "tokenSymbol", "type": "string" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Freeze", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Unfreeze", "type": "event" } ];
-
-    item={};
-    for(i=0;i<abi.length;i++)
-    {
-        item[abi[i]["name"]] = {};
-    }
-    var app = new Vue({
-        el: '#content',
-        data: {
-            message: 'Hello Vue!',
-            abi:abi,
-            item:item
-        },
-        methods:{
-            dapp_method:function (method) {
-
-                if(main_chain == "QKI")
+        mui.ajax('https://qkiscan.cn/api/abi',{
+            data:{
+                address:assets.token_address,
+            },
+            dataType:'json',//服务器返回json格式数据
+            type:'get',//HTTP请求类型
+            timeout:10000,//超时时间设置为10秒；
+            success:function(data){
+                if(data.code == 0)
                 {
-                    var provider = new ethers.providers.JsonRpcProvider({"url":getNodeHost()});
+                     abi = JSON.parse(data.data)
                 }
                 else
                 {
-                    var eth_node_host = getEthNodeHost();
-
-                    if(eth_node_host.substr(0,4) != "http")
-                    {
-                        var eth_node_name = getEthNodeName(eth_node_host);
-                        var provider = new ethers.providers.EtherscanProvider(eth_node_name,eth_node_host);
-                    }else{
-                        var provider = new ethers.providers.JsonRpcProvider({"url":eth_node_host});
-                    }
+                     abi = [ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "amount", "type": "uint256" } ], "name": "withdrawEther", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "burn", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "unfreeze", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "freezeOf", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_value", "type": "uint256" } ], "name": "freeze", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256" }, { "name": "tokenName", "type": "string" }, { "name": "decimalUnits", "type": "uint8" }, { "name": "tokenSymbol", "type": "string" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Freeze", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Unfreeze", "type": "event" } ];
                 }
-
-                var walletWithProvider = new ethers.Wallet(wallet.private_key, provider);
-
-                // 创建智能合约
-                contract = new ethers.Contract(assets.token_address, abi, walletWithProvider);
-
-
-                var fullCode="contract."+method.name+"(";
-                
-                for (i=0;i<method.inputs.length;i++)
-                {
-                    fullCode += "\"" + item[method.name][method.inputs[i].name] +"\",";
-                }
-                if(fullCode.indexOf(",")>0)
-                fullCode = fullCode.substr(0,fullCode.length-1);
-                fullCode +=").then(function (data) {" +
-                        "mui.toast(data)"+
-                    "},function (data){mui.toast(data)});";
+				item={};
+				for(i=0;i<abi.length;i++)
+				{
+				    item[abi[i]["name"]] = {};
+				}
 				
-				console.log(fullCode)
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                try {
-                    script.appendChild(document.createTextNode(fullCode));
-                } catch (ex) {
-                    script.text = fullCode;
-                }
-                document.body.appendChild(script);
+				var app = new Vue({
+				    el: '#content',
+				    data: {
+				        message: 'Hello Vue!',
+				        abi:abi,
+				        item:item
+				    },
+				    methods:{
+				        dapp_method:function (method) {
+				
+				            if(main_chain == "QKI")
+				            {
+				                var provider = new ethers.providers.JsonRpcProvider({"url":getNodeHost()});
+				            }
+				            else
+				            {
+				                var eth_node_host = getEthNodeHost();
+				
+				                if(eth_node_host.substr(0,4) != "http")
+				                {
+				                    var eth_node_name = getEthNodeName(eth_node_host);
+				                    var provider = new ethers.providers.EtherscanProvider(eth_node_name,eth_node_host);
+				                }else{
+				                    var provider = new ethers.providers.JsonRpcProvider({"url":eth_node_host});
+				                }
+				            }
+				
+				            var walletWithProvider = new ethers.Wallet(wallet.private_key, provider);
+				
+				            // 创建智能合约
+				            contract = new ethers.Contract(assets.token_address, abi, walletWithProvider);
+				
+				
+				            var fullCode="contract."+method.name+"(";
+				            
+				            for (i=0;i<method.inputs.length;i++)
+				            {
+				                fullCode += "\"" + item[method.name][method.inputs[i].name] +"\",";
+				            }
+				            if(fullCode.indexOf(",")>0)
+				            fullCode = fullCode.substr(0,fullCode.length-1);
+				            fullCode +=").then(function (data) {" +
+				                    "mui.toast(data)"+
+				                "},function (data){mui.toast(data)});";
+							
+							console.log(fullCode)
+				            var script = document.createElement("script");
+				            script.type = "text/javascript";
+				            try {
+				                script.appendChild(document.createTextNode(fullCode));
+				            } catch (ex) {
+				                script.text = fullCode;
+				            }
+				            document.body.appendChild(script);
+				
+				
+				        }
+				    }
+				});
+				
+            },
+            error:function(xhr,type,errorThrown){
 
-
+                mui.toast("网络错误");
             }
-        }
+        });
     });
+
+    
+    
 </script>
 </html>
