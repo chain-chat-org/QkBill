@@ -191,7 +191,8 @@
                         "appid_android" : "2882303761517954806",
                         "appkey_android" : "5931795489806"
                     }
-                }
+                },
+                "ad" : {}
             }
         },
         "schemeWhitelist" : [ "market" ],

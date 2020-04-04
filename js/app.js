@@ -26,7 +26,7 @@ var commonAssetsList = [
 	{
 		'assets_name':'USDT',
 		'icon':"icon-usdt",
-		'description':"QKI token",
+		'description':"QUSDTn",
 		'is_main':0,
 		'main_chain':"QKI",
 		'amount':0,
@@ -48,7 +48,7 @@ var commonAssetsList = [
 		'token_address':'0x06fc17a46991d566bc55f4186b63cfdc28aed8d4'
 	},
 	{
-		'assets_name':'ETH',
+		'assets_name':'ETH',	
 		'icon':"icon-yitaifang",
 		'description':"ETH",
 		'is_main':1,
