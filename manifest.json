@@ -3,8 +3,8 @@
     "id" : "H5D84AD73", /*必选，应用的标识*/
     "name" : "QkBill", /*必选，应用名称*/
     "version" : {
-        "name" : "1.3.8", /*必选，版本名称*/
-        "code" : 138
+        "name" : "1.3.9", /*必选，版本名称*/
+        "code" : 139
     },
     "description" : "", /*可选，应用描述信息*/
     "icons" : {
@@ -845,5 +845,6 @@
         ".idea",
         "README.md",
         "images/bgsmall.png"
-    ]
+    ],
+    "screenOrientation" : [ "portrait-primary", "landscape-secondary" ]
 }
