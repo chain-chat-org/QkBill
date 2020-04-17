@@ -133,17 +133,14 @@
 	
     mui.plusReady(function() {
         var self = plus.webview.currentWebview();
-        address = self.address;
-        assets_name = self.assets_name;
+        contract_address = self.contract_address;
         main_chain = self.main_chain;
         //获取钱包
         wallet = getWallet(address);
-        //获取资产
-        assets = getAssets(address,assets_name,main_chain);
 
         mui.ajax('https://qkiscan.cn/api/abi',{
             data:{
-                address:assets.token_address,
+                address:contract_address,
             },
             dataType:'json',//服务器返回json格式数据
             type:'get',//HTTP请求类型
@@ -193,7 +190,7 @@
 				            var walletWithProvider = new ethers.Wallet(wallet.private_key, provider);
 				
 				            // 创建智能合约
-				            contract = new ethers.Contract(assets.token_address, abi, walletWithProvider);
+				            contract = new ethers.Contract(contract_address, abi, walletWithProvider);
 				
 				
 				            var fullCode="contract."+method.name+"(";
@@ -204,11 +201,10 @@
 				            }
 				            if(fullCode.indexOf(",")>0)
 				            fullCode = fullCode.substr(0,fullCode.length-1);
-				            fullCode +=").then(function (data) {" +
+				            fullCode
+                                +="{gasLimit: 200000, gasPrice: ethers.utils.parseUnits(\"100\", \"gwei\") }).then(function (data) {" +
 				                    "mui.toast(data)"+
 				                "},function (data){mui.toast(data)});";
-							
-							console.log(fullCode)
 				            var script = document.createElement("script");
 				            script.type = "text/javascript";
 				            try {
