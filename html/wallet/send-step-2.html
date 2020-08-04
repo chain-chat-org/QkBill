@@ -491,7 +491,7 @@
 		//TOKEN转账矿工费
 		function getTokenGasPrice()
 		{
-			var gasPriceWei = ethers.utils.parseUnits('1', 'gwei');
+			var gasPriceWei = ethers.utils.parseUnits('100', 'gwei');
 			let gasLimit = ethers.utils.bigNumberify(100000);
 
 			let maxCostWei = gasPriceWei.mul(gasLimit)
