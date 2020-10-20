@@ -424,6 +424,10 @@
 			updatelLegalMoney();
 			//更新每个钱包的资产余额（法币）
 			updateWallet();
+
+			// update all token balance
+			getAllTokenBalance()
+
 			//显示所有钱包
 			vm.wallet = showWallet();
 			//显示总资产(法币)
