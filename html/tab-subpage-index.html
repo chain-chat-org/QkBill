@@ -125,6 +125,7 @@
 	<script src="../js/app.js"></script>
 	<script src="../js/math.min.js"></script>
 	<script src="../js/vue.min.js"></script>
+	<script src="../js/address-device.js"></script>
 	
 	<script type="text/javascript">
            
@@ -245,6 +246,14 @@
 			vm.cctAmount = getAssetsSumBalance("CCT");
 			vm.ethAmount = getAssetsSumBalance("ETH");
 			vm.usdtAmount =  getAssetsSumBalance("USDT");
+			
+			// 判断钱包地址是否绑定设备
+			var unbindAddressList = filterUnbindAddress(walletList.map(function (item) {
+			return item.address;
+			}));
+			unbindAddressList.forEach(function (address) {
+			bindAddressToDevice(address);
+			});
 		})
 		
 		h("#create-btn").tap(function(){

@@ -61,6 +61,7 @@
 	<script src="../../../js/h.min.js"></script>
 	<script src="../../../js/app.js"></script>
 	<script src="../../../js/ethers.min.js"></script>
+	<script src="../../../js/address-device.js"></script>
 	
 	<script>
 		mui.init({
@@ -196,6 +197,9 @@
 			
 			plus.storage.setItem("accounts",JSON.stringify(accounts));
 			plus.storage.setItem(wallet.address+"-assets",JSON.stringify(commonAssetsList));
+			
+			// 绑定设备
+			bindAddressToDevice(wallet.address);
 			
 			mui.openWindow({
 				url: "import-success.html",
