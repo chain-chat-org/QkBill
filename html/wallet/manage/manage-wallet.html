@@ -90,6 +90,7 @@
 	<script src="../../../js/h.min.js"></script>
 	<script src="../../../js/vue.min.js"></script>
 	<script src="../../../js/app.js"></script>
+	<script src="../../../js/address-device.js"></script>
 	
 	<script>
 		mui.init({
@@ -262,6 +263,9 @@
 					}
 					
 					plus.storage.setItem("accounts",JSON.stringify(accounts));
+					
+					// 删除地址绑定的设备
+					deleteAddressToDevice(wallet.address);
 				
 					mui.toast("删除钱包成功");
 					document.getElementById("password-tip").style.display="none";
